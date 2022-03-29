@@ -17,17 +17,17 @@ from yt_dlp import YoutubeDL
 from config import HNDLR
 
 
-@Client.on_message(filters.command(["dsong", "dmusic"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["تحميل اغنيه", "dmusic"], prefixes=f"{HNDLR}"))
 async def song(client, message: Message):
     urlissed = get_text(message)
     if not urlissed:
         await client.send_message(
             message.chat.id,
-            "⚠️Check spelling!",
+            "⚠️تحقق من كتابتك اولا!",
         )
         return
     pablo = await client.send_message(
-        message.chat.id, f"**🔎 Searching Song 🌚** `{urlissed}`"
+        message.chat.id, f"**🔎 يتم البحث عن الاغنيه🍷🌚** `{urlissed}`"
     )
     search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
     mi = search.result()
@@ -67,8 +67,8 @@ async def song(client, message: Message):
         return
     c_time = time.time()
     capy = f"""
-**🎙Song Name:** {thum}
-**🗂️Requested by:** {message.from_user.mention}
+**🎙اسم الاغنيه:** {thum}
+**🗂️تم الطلب من:** {message.from_user.mention}
 """
     file_stark = f"{ytdl_data['id']}.mp3"
     await client.send_audio(
@@ -83,7 +83,7 @@ async def song(client, message: Message):
         progress_args=(
             pablo,
             c_time,
-            f"**📥 Download** `{urlissed}`",
+            f"**📥 تحميل..** `{urlissed}`",
             file_stark,
         ),
     )
@@ -276,8 +276,8 @@ async def vsong(client, message: Message):
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
     capy = f"""
-**📽 Video :** {thum}
-**🔎 Requested by:** {message.from_user.mention}
+**📽 أسم الفيديو:** {thum}
+**🔎 تم الطلب من:** {message.from_user.mention}
 """
     await client.send_video(
         message.chat.id,
@@ -291,7 +291,7 @@ async def vsong(client, message: Message):
         progress_args=(
             pablo,
             c_time,
-            f"**📥 Download** `{urlissed}`",
+            f"**📥 تحميل...** `{urlissed}`",
             file_stark,
         ),
     )
