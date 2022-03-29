@@ -43,7 +43,7 @@ async def ping(client, m: Message):
 
 
 @Client.on_message(
-    filters.user(SUDO_USERS) & filters.command(["تحديث"], prefixes=f"{HNDLR}")
+    filters.user(SUDO_USERS) & filters.command(["restart"], prefixes=f"{HNDLR}")
 )
 async def restart(client, m: Message):
     await m.delete()
@@ -91,4 +91,4 @@ async def سورس(client, m: Message):
 <i> ⩹━━━━✗🍷𝑺𝑴𝑺𝑴 𝑺𝑶𝑼𝑹𝑪𝑬🍷✗━━━━⩺
 DEV: @DEV_SMSM </i>
 """
-    await m.reply(سورس)
+    await m.reply(GN)
