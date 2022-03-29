@@ -14,17 +14,17 @@ async def skip(client, m: Message):
     if len(m.command) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await m.reply("**🙄There's nothing in the queue to skip!**")
+            await m.reply("**🙄لا يوجد شيء في قائمة الانتظار لتخطيه!**")
         elif op == 1:
-            await m.reply("**😩Empty Queue, Leaving Voice Chat**")
+            await m.reply("**😩قائمة انتظار فارغة ، مغادرة الدردشة الصوتية**")
         else:
             await m.reply(
-                f"**⏭ Skipped** \n**🎧 Now playing** - [{op[0]}]({op[1]}) | `{op[2]}`",
+                f"**⏭ تم التخطي** \n**🎧 الان يتم تشغيل** - [{op[0]}]({op[1]}) | `{op[2]}`",
                 disable_web_page_preview=True,
             )
     else:
-        skip = m.text.split(None, 1)[1]
-        OP = "**🗑️ Removed the following songs from the Queue: -**"
+        تخطي= m.text.split(None, 1)[1]
+        OP = "**🗑️ تمت إزالة الأغاني التالية من قائمة الانتظار: -**"
         if chat_id in QUEUE:
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
             items.sort(reverse=True)
@@ -40,48 +40,48 @@ async def skip(client, m: Message):
             await m.reply(OP)
 
 
-@Client.on_message(filters.command(["end", "stop"], prefixes=f"{HNDLR}"))
-async def stop(client, m: Message):
+@Client.on_message(filters.command(["انهاء"], prefixes=f"{HNDLR}"))
+async def انهاء(client, m: Message):
     await m.delete()
     chat_id = m.chat.id
     if chat_id in QUEUE:
         try:
             await call_py.leave_group_call(chat_id)
             clear_queue(chat_id)
-            await m.reply("**😐End**")
+            await m.reply("**😐تم الانهاء**")
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**🤨Nothing is playing !**")
+        await m.reply("**🤨مفيش حاجة شغالة إنت بتهزر !**")
 
 
-@Client.on_message(filters.command(["pause"], prefixes=f"{HNDLR}"))
-async def pause(client, m: Message):
+@Client.on_message(filters.command(["ايقاف"], prefixes=f"{HNDLR}"))
+async def ايقاف(client, m: Message):
     await m.delete()
     chat_id = m.chat.id
     if chat_id in QUEUE:
         try:
             await call_py.pause_stream(chat_id)
             await m.reply(
-                f"**⏸ Paused.**\n\n• To resume playback, use the command » {HNDLR}resume"
+                f"**⏸ تم ايقاف التشغيل.**\n\n• عشان تكمل التشغيل, اكتب كلمه» {HNDLR}استئناف"
             )
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**🤨Nothing is playing!**")
+        await m.reply("**🤨مفيش حاجة شغالة إنت بتهزر!**")
 
 
-@Client.on_message(filters.command(["resume"], prefixes=f"{HNDLR}"))
-async def resume(client, m: Message):
+@Client.on_message(filters.command(["استئناف"], prefixes=f"{HNDLR}"))
+async def استئناف(client, m: Message):
     await m.delete()
     chat_id = m.chat.id
     if chat_id in QUEUE:
         try:
             await call_py.resume_stream(chat_id)
             await m.reply(
-                f"**▶ Resumed**\n\n• To pause playback, use the command » {HNDLR}pause**"
+                f"**▶ تم الاستئناف**\n\n• عشان توقف التشغيل, اكتب كلمه» {HNDLR}ايقاف**"
             )
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**🙄 Nothing is currently paused!**")
+        await m.reply("**🙄 مفيش حاجة واقفة أساسا أنت بتهزر!**")
