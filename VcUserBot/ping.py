@@ -43,9 +43,9 @@ async def ping(client, m: Message):
 
 
 @Client.on_message(
-    filters.user(SUDO_USERS) & filters.command(["restart"], prefixes=f"{HNDLR}")
+    filters.user(SUDO_USERS) & filters.command(["تحديث"], prefixes=f"{HNDLR}")
 )
-async def restart(client, m: Message):
+async def تحديث(client, m: Message):
     await m.delete()
     loli = await m.reply("1")
     await loli.edit("2")
